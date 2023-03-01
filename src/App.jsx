@@ -55,11 +55,24 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const authorized = await user.authorized(false);
-      console.log("user.authorized(): " + authorized);
+      const authorizedLocal = await user.authorized();
+      console.log("user.authorized(): " + authorizedLocal);
+
+      const authorizedRemote = await user.authorized({ remote: true });
+      console.log(
+        "user.authorized({ remote: true }): " + JSON.stringify(authorizedRemote)
+      );
+
+      const userInfoLocal = await user.info();
+      console.log("user.info(): " + JSON.stringify(userInfoLocal));
+
+      const userInfoRemote = await user.info({ remote: true });
+      console.log(
+        "user.info({ remote: true }): " + JSON.stringify(userInfoRemote)
+      );
     }
     fetchData();
-  }, [userInfo, setUserInfo]);
+  }, [userInfo]);
 
   let url = new URL(window.location.href);
   let codeParam = url.searchParams.get("code");
